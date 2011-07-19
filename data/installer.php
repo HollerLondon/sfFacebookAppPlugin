@@ -1,6 +1,6 @@
 <?php
 
-$this->logSection('Install', 'create facebook and backend applications');
+$this->logSection('Install', 'Create facebook application and tab module');
 $this->runTask('generate:app', 'facebook');
 $this->runTask('generate:module', 'facebook tab');
 
@@ -9,7 +9,7 @@ $this->installDir(dirname(__FILE__).'/files');
 $this->logSection('Renaming...', 'Renaming databases.yml');
 rename(sfConfig::get('sf_config_dir') . '/databases.yml', sfConfig::get('sf_config_dir') . '/databases.yml-dist');
 
-// Overwrite these files manually as installDir doesn't seem to overwrite files for me... :(
+// Overwrite these files manually as installDir doesn't overwrite existing created symfony files
 $this->logSection('Overwriting...', 'facebook_dev.php');
 copy(dirname(__FILE__).'/files/web/facebook_dev.php', sfConfig::get('sf_web_dir').'/facebook_dev.php');
 

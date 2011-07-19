@@ -9,7 +9,7 @@ sfFacebookProjectGeneratorPlugin
 Introduction
 ------------
 
-This is a customised project creation process geared towards facebook development.
+This is a customised project creation process geared towards Facebook development.
 
 
 Instructions
@@ -17,4 +17,5 @@ Instructions
 
  * Install the symfony framework files (usually in the lib/vendor project directory)
  * Create a plugins folder on the root of your project directory and install this plugin along with any other plugins you want
- * In terminal: lib/vendor/symfony/data/bin/symfony generate:project --installer=plugins/sfFacebookProjectGeneratorPlugin/data/installer.php facebook
+ * In terminal: 
+	php lib/vendor/symfony/data/bin/symfony generate:project --installer=plugins/sfFacebookProjectGeneratorPlugin/data/installer.php PROJECTNAME
