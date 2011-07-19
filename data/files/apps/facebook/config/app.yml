@@ -1,0 +1,11 @@
+all:
+  facebook:
+    app_id:       
+    app_secret:   
+    app_url:      
+
+prod:
+  facebook:
+    app_id:       
+    app_secret:   
+    app_url:      
