@@ -80,7 +80,7 @@ class sfFacebookAppUtil
       'fb_uid'      => $fb_uid
     );
     
-    sfContent::getInstance()->getUser()->setAttribute('user_data', $user_data);
+    sfContext::getInstance()->getUser()->setAttribute('user_data', $user_data);
   
     return $user_data;
   }
