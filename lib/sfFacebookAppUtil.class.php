@@ -21,10 +21,10 @@ class sfFacebookAppUtil
     list($encoded_sig, $payload) = explode('.', $signed_request, 2);
 
     // decode the data
-    $sig = self::base64UrlDecode($encoded_sig);
+    $sig  = self::base64UrlDecode($encoded_sig);
     $data = json_decode(self::base64UrlDecode($payload), true);
 
-    if (strtoupper($data['algorithm']) !== 'HMAC-SHA256')
+    if ('HMAC-SHA256' !== strtoupper($data['algorithm']))
     {
       sfContext::getInstance()->getLogger()->log('Unknown algorithm. Expected HMAC-SHA256', sfLogger::ERR);
       return null;
@@ -35,7 +35,7 @@ class sfFacebookAppUtil
     
     if ($sig !== $expected_sig)
     {
-      sfContext::getInstance()->getLogger()->log('Bad Signed JSON signature!', sfLogger::ERR);
+      sfContext::getInstance()->getLogger()->log('Bad signed JSON signature!', sfLogger::ERR);
       return null;
     }
 
@@ -75,11 +75,12 @@ class sfFacebookAppUtil
   
     $user_data = array(
       'first_name'  => (isset($graph_data['first_name']) ? $graph_data['first_name'] : ''),
-      'last_name'   => (isset($graph_data['last_name']) ? $graph_data['last_name'] : '')
+      'last_name'   => (isset($graph_data['last_name']) ? $graph_data['last_name'] : ''),
+      'fb_uid'      => $fb_uid
     );
-  }
     
-  $this->getUser()->setAttribute('user_data', $user_data);
+    $this->getUser()->setAttribute('user_data', $user_data);
   
-  return $user_data;
+    return $user_data;
+  }
 }

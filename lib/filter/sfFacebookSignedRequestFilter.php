@@ -18,11 +18,13 @@ class sfFacebookSignedRequestFilter extends sfFilter
       $data = array();
       $signed_request = 0;
     
-      if ($request->hasParameter('signed_request') && $request->getParameter('signed_request') != '') 
+      if ($request->hasParameter('signed_request') && '' != $request->getParameter('signed_request')) 
       {
         $data = sfFacebookAppUtil::parseSignedRequest($request->getParameter('signed_request'), sfConfig::get('app_facebook_app_secret'));
         $signed_request = $request->getParameter('signed_request');
-      } else {
+      } 
+      else 
+      {
         // no signed_request
         // force page refresh
       }
@@ -36,10 +38,10 @@ class sfFacebookSignedRequestFilter extends sfFilter
       $actionEntry    = $controller->getActionStack()->getLastEntry();
       $actionInstance = $actionEntry->getActionInstance();
     
-      // like gate check
-      $like_gate_config = sfConfig::get('app_facebook_like_gate', array());
       // check if like gate is enabled
-      if ( isset($like_gate_config['enabled']) && $like_gate_config['enabled'] === true )
+      $like_gate_config = sfConfig::get('app_facebook_like_gate', array());
+      
+      if (isset($like_gate_config['enabled']) && true === $like_gate_config['enabled'])
       {
         if (array_key_exists('page', $data))
         {
@@ -63,8 +65,8 @@ class sfFacebookSignedRequestFilter extends sfFilter
         // check if user_id exist
         if (array_key_exists('user_id', $data))
         {
-          $uid = $data['user_id'];
-          $user_data = sfFacebookAppUtil::getUserData($uid, $access_token, $data);
+          $uid        = $data['user_id'];
+          $user_data  = sfFacebookAppUtil::getUserData($uid, $access_token, $data);
         } 
       }
       else 
@@ -72,8 +74,10 @@ class sfFacebookSignedRequestFilter extends sfFilter
         $access_token = false;
       }
       
-      $actionInstance->data           = $data;
       $actionInstance->signed_request = $signed_request;
+      $actionInstance->data           = $data;
+      $actionInstance->access_token   = $access_token;
+      $actionInstance->user_data      = $user_data;
     }
     
     $filterChain->execute();

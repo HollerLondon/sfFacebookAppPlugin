@@ -16,9 +16,6 @@ copy(dirname(__FILE__).'/files/web/facebook_dev.php', sfConfig::get('sf_web_dir'
 $this->logSection('Overwriting...', 'main.css');
 copy(dirname(__FILE__).'/files/web/css/main.css', sfConfig::get('sf_web_dir').'/css/main.css');
 
-$this->logSection('Overwriting...', 'app.yml');
-copy(dirname(__FILE__).'/files/apps/facebook/config/app.yml', sfConfig::get('sf_apps_dir').'/facebook/config/app.yml');
-
 $this->logSection('Overwriting...', 'filters.yml');
 copy(dirname(__FILE__).'/files/apps/facebook/config/filters.yml', sfConfig::get('sf_apps_dir').'/facebook/config/filters.yml');
 
