@@ -1,4 +1,4 @@
-sfFacebookProjectGeneratorPlugin
+sfFacebookAppPlugin
 =========================
 
 @author:    Jimmy Wong (<jimmywong@holler.co.uk>)
@@ -21,4 +21,4 @@ Instructions
  * Create a plugins folder on the root of your project directory and install this plugin (this plugin can be deleted after intial installation) along with any other plugins you want
  * In terminal: 
  
-        php lib/vendor/symfony/data/bin/symfony generate:project --installer=plugins/sfFacebookProjectGeneratorPlugin/data/installer.php PROJECTNAME
+        php lib/vendor/symfony/data/bin/symfony generate:project --installer=plugins/sfFacebookAppPlugin/data/installer.php PROJECTNAME
