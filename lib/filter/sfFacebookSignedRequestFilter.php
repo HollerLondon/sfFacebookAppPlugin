@@ -67,6 +67,7 @@ class sfFacebookSignedRequestFilter extends sfFilter
         {
           $uid        = $data['user_id'];
           $user_data  = sfFacebookAppUtil::getUserData($uid, $access_token, $data);
+          $actionInstance->user_data = $user_data;
         } 
       }
       else 
@@ -77,7 +78,6 @@ class sfFacebookSignedRequestFilter extends sfFilter
       $actionInstance->signed_request = $signed_request;
       $actionInstance->data           = $data;
       $actionInstance->access_token   = $access_token;
-      $actionInstance->user_data      = $user_data;
     }
     
     $filterChain->execute();
