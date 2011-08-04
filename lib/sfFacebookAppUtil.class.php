@@ -76,6 +76,7 @@ class sfFacebookAppUtil
     $user_data = array(
       'first_name'  => (isset($graph_data['first_name']) ? $graph_data['first_name'] : ''),
       'last_name'   => (isset($graph_data['last_name']) ? $graph_data['last_name'] : ''),
+      'email'   => (isset($graph_data['email']) ? $graph_data['email'] : ''),
       'fb_uid'      => $fb_uid
     );
     
