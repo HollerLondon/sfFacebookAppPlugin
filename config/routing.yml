@@ -4,3 +4,7 @@
 tab:
   url:   /tab
   param: { module: sfFacebookAppTab, action: tab }
+  
+auth:
+  url:   /auth
+  param: { module: sfFacebookAppTab, action: auth }
