@@ -8,3 +8,7 @@ tab:
 auth:
   url:   /auth
   param: { module: sfFacebookAppTab, action: auth }
+  
+redirect:
+  url:   /redirect
+  param: { module: sfFacebookAppTab, action: redirect }
