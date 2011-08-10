@@ -31,7 +31,7 @@ class BasesfFacebookAppTabActions extends sfActions
     $app_data   = '?app_data=' . sfConfig::get('app_facebook_app_data', $request->getParameter('app_data'));
     $app_scope  = '&scope=' . sfConfig::get('app_facebook_app_scope');
     
-    sfProjectConfiguration::getActive()->loadHelpers('url');
+    sfProjectConfiguration::getActive()->loadHelpers('Url');
     
     //$app_url    = urlencode(sfConfig::get('app_facebook_app_url') . $app_data);
     $app_url    = urlencode(url_for('@redirect'.$app_data, array('absolute' => true)));
