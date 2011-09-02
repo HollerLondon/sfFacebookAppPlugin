@@ -1,17 +1,11 @@
 all:
   facebook:
-    app_id:       
-    app_secret:   
-    app_url:      
+    app_id:       ~
+    app_secret:   ~
+    app_url:      ~
     homepage:     '@homepage'
     app_data:     'from_auth'
     like_gate:
       enabled:    true
       module:     sfFacebookAppTab
       action:     like
-
-prod:
-  facebook:
-    app_id:       
-    app_secret:   
-    app_url:      

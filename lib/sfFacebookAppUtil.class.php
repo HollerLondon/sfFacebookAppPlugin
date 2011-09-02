@@ -15,9 +15,20 @@ class sfFacebookAppUtil
    * @param   string  $signed_request
    * @param   string  $secret
    * @return  decoded data
+   * @deprecated use Facebook SDK
    */
   public static function parseSignedRequest($signed_request, $secret)
   {
+    /**
+     * try
+     * {
+     *    sfFacebook::getInstance()->parseSignedRequest($signed_request,secret)
+     * }
+     * catch(FacebookException)
+     * {
+     *    sfContext::getInstance()->getLogger()->log($e->getMessage(),sfLogger::ERR);
+     * }
+     */
     list($encoded_sig, $payload) = explode('.', $signed_request, 2);
 
     // decode the data
@@ -45,6 +56,7 @@ class sfFacebookAppUtil
   /**
    * @param   string $input
    * @return  string
+   * @deprecated Use Facebook SDK
    */
   public static function base64UrlDecode($input)
   {
@@ -58,9 +70,13 @@ class sfFacebookAppUtil
    * @param string $access_token
    * @param array $data
    * @return array
+   * @deprecated Use Facebook SDK
    */
   public static function getUserData($fb_uid, $access_token, $data)
   {
+    // Most of the logic here should use this:
+    // $graph_data = sfFacebook::getInstance()->api('/me',array('access_token'=>$access_token));
+    
     // Get user information
     $graph_api = 'https://graph.facebook.com/me?access_token='.$access_token;
   
@@ -73,6 +89,8 @@ class sfFacebookAppUtil
       $graph_data = array();
     }
   
+    // ...replace up to this point
+    
     $user_data = array(
       'first_name'  => (isset($graph_data['first_name']) ? $graph_data['first_name'] : ''),
       'last_name'   => (isset($graph_data['last_name']) ? $graph_data['last_name'] : ''),
