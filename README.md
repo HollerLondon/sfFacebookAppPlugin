@@ -15,6 +15,10 @@ It includes an installer that'll create a Facebook application, a tab module, an
 
 The plugin also includes extensions to the web debug bar for profiling API calls.
 
+To make API calls, rather than instantiating an instance of the Facebook SDK, use:
+
+    sfFacebook::getInstance()->api('/me');
+
 Instructions
 ------------
 
