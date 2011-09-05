@@ -96,7 +96,6 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
     foreach(self::$events as $event)
     {
       $params = $event->getParameters();
-      var_dump($event->getMethod());      
       switch($event->getMethod())
       {
         case 'fql.query':
