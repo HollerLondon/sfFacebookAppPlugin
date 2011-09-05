@@ -61,10 +61,20 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
    * 
    * @param sfEvent $event
    */
-  public static function listenToApiCall(sfEvent $event)
+  public static function listenToApiCall(sfFacebookEvent $event)
   {
     $params   = $event->getParameters();
-    $log_msg  = sprintf('Facebook API: "%s"',$params[0]);
+    $method   = $event->getMethod();
+    
+    switch($method)
+    {
+      case 'GET':
+        $log_msg  = sprintf('%s: "%s"',$method, $params[0]);
+        break;
+      case 'fql.query':
+        $log_msg  = sprintf("%s: %s",$method,$event->getQuery());
+        break;
+    }
 
     self::$events[] = $event;
     $event->setProcessed(true);
@@ -86,8 +96,19 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
     foreach(self::$events as $event)
     {
       $params = $event->getParameters();
+      var_dump($event->getMethod());      
+      switch($event->getMethod())
+      {
+        case 'fql.query':
+          $log = $this->formatSql(htmlspecialchars($event->getQuery(),ENT_QUOTES,sfConfig::get('sf_charset')));
+          break;
+        case 'GET':
+          $log = $params[0];
+          break;
+      }
+      
       $response[] = sprintf('<li><p class="sfWebDebugDatabaseQuery">%s</p><p class="sfWebDebugDatabaseLogInfo">%ss</p></li>',
-        $params[0],
+        $log,
         number_format($event->getElapsedSecs(), 2)
       );
     }

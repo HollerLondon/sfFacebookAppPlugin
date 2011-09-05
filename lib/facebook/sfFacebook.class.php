@@ -12,8 +12,8 @@ class sfFacebook extends Facebook
   protected function makeRequest($url, $params, $ch=null)
   {
     $args       = func_get_args();
-    $event      = new sfFacebookEvent($this,'facebook.api_call',array($url));
-    $response   = parent::makeRequest($url,$params, $ch);
+    $event      = new sfFacebookEvent($this,'facebook.api_call',$args);
+    $response   = parent::makeRequest($url,$params,$ch);
     sfProjectConfiguration::getActive()->getEventDispatcher()->notify($event);
     return $response;
   }

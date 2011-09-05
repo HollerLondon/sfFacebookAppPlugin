@@ -35,4 +35,25 @@ class sfFacebookEvent extends sfEvent
     $this->end_time = microtime(true);
     $this->timer->addTime();
   }
+  
+  public function getMethod()
+  {
+    $params = $this->getParameters();
+    return isset($params[1]) && isset($params[1]['method']) ? $params[1]['method'] : 'GET';
+  }
+  
+  /**
+   * Gets the FQL query if present with linebreaks stripped and whitespace normalised
+   * 
+   * @return string
+   */
+  public function getQuery()
+  {
+    if($this->getMethod() === 'fql.query')
+    {
+      $params = $this->getParameters();
+      return preg_replace('/\s+/',' ',$params[1]['query']);
+    }
+    return '';
+  }
 } // END
