@@ -17,7 +17,7 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
    */
   public function getTitle()
   {
-    return '<img src="/images/icon.fb.png" width="16" height="16" /> '.count(self::$events);
+    if(!empty(self::$events)) return '<img src="/images/icon.fb.png" width="16" height="16" /> '.count(self::$events);
   }
   
   /**
