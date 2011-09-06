@@ -3,8 +3,13 @@ all:
     app_id:       ~
     app_secret:   ~
     app_url:      ~
+    
     homepage:     '@homepage'
     app_data:     'from_auth'
+    app_scope:    ~
+    
+    user_data:    [ first_name, last_name ]   # defaults - fb_uid also included
+    
     like_gate:
       enabled:    true
       module:     sfFacebookAppTab

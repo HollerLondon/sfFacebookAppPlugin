@@ -61,7 +61,7 @@ class BasesfFacebookAppTabActions extends sfActions
   }
   
   /**
-   * like gate
+   * Like gate
    * 
    * @param sfWebRequest $request
    */

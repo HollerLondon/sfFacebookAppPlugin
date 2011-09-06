@@ -20,7 +20,7 @@ class sfFacebookSignedRequestFilter extends sfFilter
     
       if ($request->hasParameter('signed_request') && '' != $request->getParameter('signed_request')) 
       {
-        $data = sfFacebookAppUtil::parseSignedRequest($request->getParameter('signed_request'), sfConfig::get('app_facebook_app_secret'));
+        $data           = sfFacebookAppUtil::getSignedRequest();
         $signed_request = $request->getParameter('signed_request');
       } 
       else 

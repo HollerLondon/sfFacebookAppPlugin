@@ -1,11 +1,12 @@
 <?php
 
 /**
- * parses facebook signed request
+ * Useful Facebook functionality, used by the filter etc.
  * 
  * @package     sfFacebookAppPlugin
- * @subpackage  Util
+ * @subpackage  lib
  * @author      Jimmy Wong <jimmywong@holler.co.uk>
+ * @author      Jo Carter <jocarter@holler.co.uk>
  */
 class sfFacebookAppUtil
 {
@@ -15,52 +16,34 @@ class sfFacebookAppUtil
    * @param   string  $signed_request
    * @param   string  $secret
    * @return  decoded data
-   * @deprecated use Facebook SDK
+   * @deprecated use sfFacebookAppUtil::getSignedRequest();
    */
   public static function parseSignedRequest($signed_request, $secret)
   {
-    /**
-     * try
-     * {
-     *    sfFacebook::getInstance()->parseSignedRequest($signed_request,secret)
-     * }
-     * catch(FacebookException)
-     * {
-     *    sfContext::getInstance()->getLogger()->log($e->getMessage(),sfLogger::ERR);
-     * }
-     */
-    list($encoded_sig, $payload) = explode('.', $signed_request, 2);
-
-    // decode the data
-    $sig  = self::base64UrlDecode($encoded_sig);
-    $data = json_decode(self::base64UrlDecode($payload), true);
-
-    if ('HMAC-SHA256' !== strtoupper($data['algorithm']))
-    {
-      sfContext::getInstance()->getLogger()->log('Unknown algorithm. Expected HMAC-SHA256', sfLogger::ERR);
-      return null;
-    }
-
-    // check sig
-    $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
-    
-    if ($sig !== $expected_sig)
-    {
-      sfContext::getInstance()->getLogger()->log('Bad signed JSON signature!', sfLogger::ERR);
-      return null;
-    }
-
-    return $data;
+    return self::getSignedRequest();
   }
-
+  
   /**
-   * @param   string $input
-   * @return  string
-   * @deprecated Use Facebook SDK
+   * Parse the Facebook signed request, and return the data contained
+   * 
+   * @return array of decoded data
    */
-  public static function base64UrlDecode($input)
+  public static function getSignedRequest()
   {
-    return base64_decode(strtr($input, '-_', '+/'));
+    try
+    {
+      $facebook = sfFacebook::getInstance();
+      $facebook->setApiSecret(sfConfig::get('app_facebook_app_secret'));
+      
+      $data     = $facebook->getSignedRequest();
+    }
+    catch (FacebookException $e)
+    {
+      sfContext::getInstance()->getLogger()->log($e->getMessage(), sfLogger::ERR);
+      return null;
+    }
+    
+    return $data;
   }
   
   /**
@@ -70,36 +53,39 @@ class sfFacebookAppUtil
    * @param string $access_token
    * @param array $data
    * @return array
-   * @deprecated Use Facebook SDK
    */
   public static function getUserData($fb_uid, $access_token, $data)
   {
-    // Most of the logic here should use this:
-    // $graph_data = sfFacebook::getInstance()->api('/me',array('access_token'=>$access_token));
+    $user_data_required = sfConfig::get('app_facebook_user_data');
+    $user_data          = sfContext::getInstance()->getUser()->getAttribute('user_data', array());
+    
+    // If already in session return that
+    if (isset($user_data[$user_data_required[0]]) && !empty($user_data[$user_data_required[0]]))
+    {
+      return $user_data;
+    }
     
     // Get user information
-    $graph_api = 'https://graph.facebook.com/me?access_token='.$access_token;
-  
     try 
     {
-      $graph_data = json_decode(file_get_contents($graph_api), true);
+      $graph_data = sfFacebook::getInstance()->api('/me', array('access_token' => $access_token));
     }
     catch (Exception $e) 
     {
-      $graph_data = array();
+      sfContext::getInstance()->getLogger()->log($e->getMessage(), sfLogger::ERR);
+      return array('fb_uid' => $fb_uid);
     }
-  
-    // ...replace up to this point
     
-    $user_data = array(
-      'first_name'  => (isset($graph_data['first_name']) ? $graph_data['first_name'] : ''),
-      'last_name'   => (isset($graph_data['last_name']) ? $graph_data['last_name'] : ''),
-      'email'   => (isset($graph_data['email']) ? $graph_data['email'] : ''),
-      'fb_uid'      => $fb_uid
-    );
+    // Get required user data
+    $user_data          = array('fb_uid' => $fb_uid);
+    
+    foreach ($user_data_required as $fb_field)
+    {
+      $user_data[$fb_field] = (isset($graph_data[$fb_field]) ? $graph_data[$fb_field] : '');
+    }
     
     sfContext::getInstance()->getUser()->setAttribute('user_data', $user_data);
-  
+    
     return $user_data;
   }
 }
