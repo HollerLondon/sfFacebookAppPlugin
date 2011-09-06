@@ -38,20 +38,24 @@ class sfFacebookSignedRequestFilter extends sfFilter
       $actionEntry    = $controller->getActionStack()->getLastEntry();
       $actionInstance = $actionEntry->getActionInstance();
     
-      // check if like gate is enabled
-      $like_gate_config = sfConfig::get('app_facebook_like_gate', array());
-      
-      if (isset($like_gate_config['enabled']) && true === $like_gate_config['enabled'])
+      // If we're on live
+      if ('prod' == sfConfig::get('app_environment'))
       {
-        if (array_key_exists('page', $data))
+        // check if like gate is enabled
+        $like_gate_config = sfConfig::get('app_facebook_like_gate', array());
+        
+        if (isset($like_gate_config['enabled']) && true === $like_gate_config['enabled'])
         {
-          // check if a user has liked the page
-          if (array_key_exists('liked', $data['page']))
+          if (array_key_exists('page', $data))
           {
-            // redirect if they haven't
-            if (!$data['page']['liked'] && $actionInstance->getModuleName() != $like_gate_config['module'] && $actionInstance->getActionName() != $like_gate_config['action'])
+            // check if a user has liked the page
+            if (array_key_exists('liked', $data['page']))
             {
-              $controller->redirect($like_gate_config['module'] . '/' . $like_gate_config['action']);
+              // redirect if they haven't
+              if (!$data['page']['liked'] && $actionInstance->getModuleName() != $like_gate_config['module'] && $actionInstance->getActionName() != $like_gate_config['action'])
+              {
+                $controller->redirect($like_gate_config['module'] . '/' . $like_gate_config['action']);
+              }
             }
           }
         }
