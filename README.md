@@ -1,7 +1,7 @@
 sfFacebookAppPlugin
 =========================
 
-@author:    Jimmy Wong (<jimmywong@holler.co.uk>), Ben Lancaster (benlancaster@holler.co.uk)
+@author:    Jimmy Wong (<jimmywong@holler.co.uk>), Ben Lancaster (<benlancaster@holler.co.uk>), Jo Carter (<jocarter@holler.co.uk>)
 
 @version:   0.1a
 
@@ -23,15 +23,24 @@ Instructions
 ------------
 
  * Install the symfony framework files (usually in the lib/vendor directory)
- * Add the Facebook SDK to your lib/vendor folder (ideally using git submodules or svn:externals), and configure config/autoload.yml to include it:
+ * Add the Facebook SDK (https://github.com/facebook/php-sdk) to your lib/vendor folder (ideally using git submodules or svn:externals), and configure config/autoload.yml to include it:
   
         autoload:
 
           fb_sdk:
-            name:       Facebook
+            name:       facebook
             path:       %SF_LIB_DIR%/vendor/facebook/src
  
- * Create a plugins folder on the root of your project directory and install this plugin (this plugin can be deleted after intial installation) along with any other plugins you want
+ * Create a plugins folder on the root of your project directory and install this plugin along with any other plugins you want
  * To use the installer, in terminal: 
  
         php lib/vendor/symfony/data/bin/symfony generate:project --installer=plugins/sfFacebookAppPlugin/data/installer.php PROJECTNAME
+
+ * If you already have a project, and want to include the Facebook filter to parse the signed_request and get user data.  Include in the app's filters.yml
+
+        sfFacebookApp:
+          class: sfFacebookSignedRequestFilter
+
+ * Then, in the action where you want to authorise the app with the user add:
+
+        if (false === $this->access_token) $this->redirect('@auth');
