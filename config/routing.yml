@@ -12,3 +12,7 @@ auth:
 redirect:
   url:   /redirect
   param: { module: sfFacebookAppTab, action: redirect }
+  
+fb_channel:
+  url:   /channel
+  param: { module: sfFacebookAppTab, action: channel }

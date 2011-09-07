@@ -68,4 +68,13 @@ class BasesfFacebookAppTabActions extends sfActions
   public function executeLike(sfWebRequest $request)
   {
   }
+  
+  /**
+   * Channel 
+   */
+  public function executeChannel(sfWebRequest $request)
+  {
+    sfConfig::set('sf_web_debug', false);
+    return $this->renderText('<script src="//connect.facebook.net/en_US/all.js"></script>');
+  }
 }
