@@ -69,10 +69,14 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
     switch($method)
     {
       case 'GET':
+      case 'POST':
         $log_msg  = sprintf('%s: "%s"',$method, $params[0]);
         break;
       case 'fql.query':
         $log_msg  = sprintf("%s: %s",$method,$event->getQuery());
+        break;
+      default:
+        $log_msg  = 'unknown';
         break;
     }
 
@@ -101,8 +105,12 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
         case 'fql.query':
           $log = $this->formatSql(htmlspecialchars($event->getQuery(),ENT_QUOTES,sfConfig::get('sf_charset')));
           break;
+        case 'POST':
         case 'GET':
           $log = $params[0];
+          break;
+        default:
+          $log = 'unknown';
           break;
       }
       
