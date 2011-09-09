@@ -64,12 +64,12 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
   public static function listenToApiCall(sfFacebookEvent $event)
   {
     $params   = $event->getParameters();
-    $method   = $event->getMethod();
+    $method   = strtolower($event->getMethod());
     
     switch($method)
     {
-      case 'GET':
-      case 'POST':
+      case 'get':
+      case 'post':
         $log_msg  = sprintf('%s: "%s"',$method, $params[0]);
         break;
       case 'fql.query':
@@ -99,14 +99,16 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
     $response = array();
     foreach(self::$events as $event)
     {
-      $params = $event->getParameters();
-      switch($event->getMethod())
+      $params   = $event->getParameters();
+      $method   = strtolower($event->getMethod());
+      
+      switch($method)
       {
         case 'fql.query':
           $log = $this->formatSql(htmlspecialchars($event->getQuery(),ENT_QUOTES,sfConfig::get('sf_charset')));
           break;
-        case 'POST':
-        case 'GET':
+        case 'post':
+        case 'get':
           $log = $params[0];
           break;
         default:
