@@ -9,6 +9,14 @@ auth:
   url:   /auth
   param: { module: sfFacebookAppTab, action: auth }
   
+fb_like:
+  url:   /like
+  param: { module: sfFacebookAppTab, action: like }
+  
 redirect:
   url:   /redirect
   param: { module: sfFacebookAppTab, action: redirect }
+  
+fb_channel:
+  url:   /channel
+  param: { module: sfFacebookAppTab, action: channel }

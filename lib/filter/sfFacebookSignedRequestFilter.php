@@ -39,24 +39,20 @@ class sfFacebookSignedRequestFilter extends sfFilter
       $actionInstance = $actionEntry->getActionInstance();
     
       // If we're on live
-      if ('prod' == sfConfig::get('app_environment'))
+      if ('prod' == sfConfig::get('sf_environment'))
       {
         // check if like gate is enabled
         $like_gate_config = sfConfig::get('app_facebook_like_gate', array());
         
         if (isset($like_gate_config['enabled']) && true === $like_gate_config['enabled'])
         {
-          if (array_key_exists('page', $data))
+          // If we have no data - make them like the page :)
+          if (empty($data)) $data['page']['liked'] = false;
+          
+          // check if a user has liked the page & redirect if they haven't
+          if (!$data['page']['liked'] && $actionInstance->getModuleName() != $like_gate_config['module'] && $actionInstance->getActionName() != $like_gate_config['action'])
           {
-            // check if a user has liked the page
-            if (array_key_exists('liked', $data['page']))
-            {
-              // redirect if they haven't
-              if (!$data['page']['liked'] && $actionInstance->getModuleName() != $like_gate_config['module'] && $actionInstance->getActionName() != $like_gate_config['action'])
-              {
-                $controller->redirect($like_gate_config['module'] . '/' . $like_gate_config['action']);
-              }
-            }
+            $controller->redirect($like_gate_config['module'] . '/' . $like_gate_config['action']);
           }
         }
       }
