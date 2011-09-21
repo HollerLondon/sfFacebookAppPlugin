@@ -33,8 +33,18 @@ class BasesfFacebookAppTabActions extends sfActions
     
     sfProjectConfiguration::getActive()->loadHelpers('Url');
     
+    // check if we have a signed_request
+    if($request->hasParameter('signed_request'))
+    {
+      $signed_request = '&signed_request=' . $request->getParameter('signed_request');
+    }
+    else
+    {
+      $signed_request = '';
+    }
+    
     //$app_url    = urlencode(sfConfig::get('app_facebook_app_url') . $app_data);
-    $app_url    = urlencode(url_for('@redirect'.$app_data, array('absolute' => true)));
+    $app_url    = urlencode(url_for('@redirect'.$app_data.$signed_request, array('absolute' => true)));
     $dialog_url = 'http://www.facebook.com/dialog/oauth?client_id=' . sfConfig::get('app_facebook_app_id') . $app_scope;
     
     $auth_url   = '<script>top.location.href="' . $dialog_url . '&redirect_uri=' . $app_url . '"</script>';
