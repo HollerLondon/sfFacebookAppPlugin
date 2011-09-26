@@ -75,7 +75,7 @@ class sfFacebook extends Facebook
       $options['cache'] = new $cache_options['class']($cache_options['param']);
     }
 
-    self::$instance = self::$instance ?: new sfFacebook($options);
+    self::$instance = self::$instance ? self::$instance : new sfFacebook($options);
     return self::$instance;
   }
 } // END
