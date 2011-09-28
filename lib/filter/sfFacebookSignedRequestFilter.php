@@ -44,12 +44,13 @@ class sfFacebookSignedRequestFilter extends sfFilter
       if (isset($like_gate_config['enabled']) && true === $like_gate_config['enabled'])
       {
         // If we have no data - make them like the page :)
-        if (empty($data)) $data['page']['liked'] = false;
-          
-        // check if a user has liked the page & redirect if they haven't
-        if (!$data['page']['liked'] && ($actionInstance->getModuleName() != $like_gate_config['module'] || $actionInstance->getActionName() != $like_gate_config['action']))
+        if (!empty($data) && isset($data['page']))
         {
-          $controller->redirect($like_gate_config['module'] . '/' . $like_gate_config['action']);
+          // check if a user has liked the page & redirect if they haven't
+          if (!$data['page']['liked'] && ($actionInstance->getModuleName() != $like_gate_config['module'] || $actionInstance->getActionName() != $like_gate_config['action']))
+          {
+            $controller->redirect($like_gate_config['module'] . '/' . $like_gate_config['action']);
+          }
         }
       }
     
