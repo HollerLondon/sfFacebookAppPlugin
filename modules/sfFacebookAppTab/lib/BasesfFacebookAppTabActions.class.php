@@ -28,7 +28,7 @@ class BasesfFacebookAppTabActions extends sfActions
    */
   public function executeAuth(sfWebRequest $request)
   {
-    $app_data   = '?app_data=' . sfConfig::get('app_facebook_app_data', $request->getParameter('app_data'));
+    $app_data   = '?app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
     $app_scope  = '&scope=' . sfConfig::get('app_facebook_app_scope');
     
     sfProjectConfiguration::getActive()->loadHelpers('Url');
@@ -61,7 +61,7 @@ class BasesfFacebookAppTabActions extends sfActions
    */
   public function executeRedirect(sfWebRequest $request)
   {
-    $app_data   = '&app_data=' . sfConfig::get('app_facebook_app_data', $request->getParameter('app_data'));
+    $app_data   = '&app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
     $app_url = sfConfig::get('app_facebook_app_url') . $app_data;
     
     $redirect_url   = '<script>top.location.href="' . $app_url . '"</script>';
