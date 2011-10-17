@@ -3,6 +3,7 @@ all:
     app_id:       ~
     app_secret:   ~
     app_url:      ~
+    # redirect_url: ~
     
     homepage:     '@homepage'
     app_data:     'from_auth'
