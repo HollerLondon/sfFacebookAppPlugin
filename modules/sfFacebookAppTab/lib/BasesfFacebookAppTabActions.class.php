@@ -61,10 +61,19 @@ class BasesfFacebookAppTabActions extends sfActions
    */
   public function executeRedirect(sfWebRequest $request)
   {
-    $app_data   = '&app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
-    $app_url = sfConfig::get('app_facebook_app_url') . $app_data;
+    // set this for a url other than a facebook tab
+    $app_url = sfConfig::get('app_facebook_redirect_url', sfConfig::get('app_facebook_app_url'));
     
-    $redirect_url   = '<script>top.location.href="' . $app_url . '"</script>';
+    $app_data   = 'app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
+    
+    // check if app_url contains a question mark or not
+    $app_query = '&';
+    if( false === strrpos($app_url, '?') )
+    {
+      $app_query = '?';
+    }
+    
+    $redirect_url   = '<script>top.location.href="' . $app_url . $app_query . $app_data . '"</script>';
     
     sfConfig::set('sf_web_debug',false);
     return $this->renderText($redirect_url);

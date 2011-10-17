@@ -70,6 +70,7 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
     {
       case 'get':
       case 'post':
+      case 'delete':
         $log_msg  = sprintf('%s: "%s"',$method, $params[0]);
         break;
       case 'fql.query':
@@ -109,6 +110,7 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
           break;
         case 'post':
         case 'get':
+        case 'delete':
           $log = $params[0];
           break;
         default:
