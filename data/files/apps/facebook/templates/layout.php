@@ -17,9 +17,9 @@
           cookie : true,
           xfbml  : true
         });
-        FB.Canvas.setAutoResize();
+        FB.Canvas.setAutoGrow();
         FB.Canvas.setSize();
-        FB.Canvas.scrollTo(0,0);
+        //FB.Canvas.scrollTo(0,0);
       };
       // Load async as causing scrollbars in FF4 otherwise
       (function() {
