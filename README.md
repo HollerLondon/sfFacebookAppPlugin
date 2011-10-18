@@ -43,4 +43,4 @@ Instructions
 
  * Then, in the action where you want to authorise the app with the user add:
 
-        if (false === $this->access_token) $this->redirect('@auth');
+        if (false === $this->access_token) $this->redirect('@auth?signed_request='.$request->getParameter('signed_request');
