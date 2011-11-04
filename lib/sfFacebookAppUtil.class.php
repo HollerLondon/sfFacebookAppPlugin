@@ -59,16 +59,6 @@ class sfFacebookAppUtil
     $user_data_required = sfConfig::get('app_facebook_user_data');
     $user_data          = sfContext::getInstance()->getUser()->getAttribute('user_data', array());
     
-    // If already in session return that
-    if (isset($user_data[$user_data_required[0]]) && !empty($user_data[$user_data_required[0]]))
-    {
-      // Unless we've changed the user fields
-      if (count($user_data_required) == (count($user_data) - 1)) // -1 is for fb_uid
-      {
-        return $user_data;
-      }
-    }
-    
     // Get user information
     try 
     {
@@ -87,8 +77,6 @@ class sfFacebookAppUtil
     {
       $user_data[$fb_field] = (isset($graph_data[$fb_field]) ? $graph_data[$fb_field] : '');
     }
-    
-    sfContext::getInstance()->getUser()->setAttribute('user_data', $user_data);
     
     return $user_data;
   }
