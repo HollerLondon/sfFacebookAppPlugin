@@ -44,3 +44,8 @@ Instructions
  * Then, in the action where you want to authorise the app with the user add:
 
         if (false === $this->access_token) $this->redirect('@auth?signed_request='.$request->getParameter('signed_request'));
+
+ * If you want to request additional permissions (not in the regular scope)
+
+		 $additionalScope = 'email';
+         if (false === $this->access_token) $this->redirect(sprintf('@auth_scope?scope=%s&signed_request=%s', $additionalScope, $request->getParameter('signed_request')));

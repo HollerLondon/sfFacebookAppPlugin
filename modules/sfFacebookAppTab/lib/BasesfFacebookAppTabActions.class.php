@@ -44,6 +44,39 @@ class BasesfFacebookAppTabActions extends sfActions
     }
     
     //$app_url    = urlencode(sfConfig::get('app_facebook_app_url') . $app_data);
+    // @TODO: refactor to use $this->generateUrl();
+    $app_url    = urlencode(url_for('@redirect'.$app_data.$signed_request, array('absolute' => true)));
+    $dialog_url = 'http://www.facebook.com/dialog/oauth?client_id=' . sfConfig::get('app_facebook_app_id') . $app_scope;
+    
+    $auth_url   = '<script>top.location.href="' . $dialog_url . '&redirect_uri=' . $app_url . '"</script>';
+    
+    sfConfig::set('sf_web_debug',false);
+    return $this->renderText($auth_url);
+  }
+  
+  /**
+   * Adds additional permissions to auth
+   * 
+   * @param sfWebRequest $request
+   */
+  public function executeAuthAdditional(sfWebRequest $request)
+  {
+    $app_data   = '?app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
+    $app_scope  = '&scope=' . $request->getParameter('scope');
+    
+    sfProjectConfiguration::getActive()->loadHelpers('Url');
+    
+    // check if we have a signed_request
+    if ($request->hasParameter('signed_request'))
+    {
+      $signed_request = '&signed_request=' . $request->getParameter('signed_request');
+    }
+    else
+    {
+      $signed_request = '';
+    }
+    
+    // @TODO: refactor to use $this->generateUrl();
     $app_url    = urlencode(url_for('@redirect'.$app_data.$signed_request, array('absolute' => true)));
     $dialog_url = 'http://www.facebook.com/dialog/oauth?client_id=' . sfConfig::get('app_facebook_app_id') . $app_scope;
     

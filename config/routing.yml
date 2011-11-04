@@ -9,6 +9,11 @@ auth:
   url:   /auth
   param: { module: sfFacebookAppTab, action: auth }
   
+auth_scope:
+  url:   /auth/:scope
+  param: { module: sfFacebookAppTab, action: authAdditional }
+  
+  
 # fb_like:
 #   url:   /like
 #   param: { module: sfFacebookAppTab, action: like }
