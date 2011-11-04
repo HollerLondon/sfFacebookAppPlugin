@@ -43,23 +43,27 @@ class sfFacebook extends Facebook
     $cache_key  = sha1('fb_'.$url.serialize($params));
     
     // check params['method'] = only cache get requests
-    $method = (isset($param['method']) ? strtolower($param['method']) : false);
-    
+    $method     = array_key_exists('method',$params) ? strtolower($params['method']) : false;
+    $lifetime   = array_key_exists('lifetime',$params) ? $params['lifetime'] : sfConfig::get('app_facebook_cache_lifetime', 3600);
+
     if ($this->getCache()->has($cache_key) && 'get' == $method)
     {
       $response = $this->getCache()->get($cache_key);
+      $event->setCacheModified($this->getCache()->getLastModified($cache_key));
+      $event->setCacheTimeout($this->getCache()->getTimeout($cache_key));
     }
     else
     {
       $response = parent::makeRequest($url,$params,$ch); 
-       
+      
       if ('get' == $method) 
       {
-        $this->getCache()->set($cache_key, $response, sfConfig::get('app_facebook_cache_lifetime', 3600));
+        $this->getCache()->set($cache_key, $response, $lifetime);
       }
       
-      sfProjectConfiguration::getActive()->getEventDispatcher()->notify($event);
     }
+
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify($event);
 
     return $response;
   }

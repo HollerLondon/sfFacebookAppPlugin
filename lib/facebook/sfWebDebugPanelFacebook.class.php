@@ -118,10 +118,20 @@ class sfWebDebugPanelFacebook extends sfWebDebugPanel
           break;
       }
       
-      $response[] = sprintf('<li><p class="sfWebDebugDatabaseQuery">%s</p><p class="sfWebDebugDatabaseLogInfo">%ss</p></li>',
+      $msg = sprintf('<li><p class="sfWebDebugDatabaseQuery">%s: %s</p><p class="sfWebDebugDatabaseLogInfo">%ss</p>',
+        strtoupper($method),
         $log,
         number_format($event->getElapsedSecs(), 2)
       );
+      
+      if($event->isCached())
+      {
+        $msg.= sprintf('<p class="sfWebDebugDatabaseLogInfo">Cache: %s</p>',$event->getCacheInfo());
+      }
+      
+      $msg .= '</li>';
+      
+      $response[] = $msg;
     }
     return $response;
   }
