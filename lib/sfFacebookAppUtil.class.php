@@ -57,7 +57,6 @@ class sfFacebookAppUtil
   public static function getUserData($fb_uid, $access_token, $data)
   {
     $user_data_required = sfConfig::get('app_facebook_user_data');
-    $user_data          = sfContext::getInstance()->getUser()->getAttribute('user_data', array());
     
     // Get user information
     try 
