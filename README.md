@@ -49,3 +49,11 @@ Instructions
 
 		 $additionalScope = 'email';
          if (false === $this->access_token) $this->redirect(sprintf('@auth_scope?scope=%s&signed_request=%s', $additionalScope, $request->getParameter('signed_request')));
+
+ * If you want to be able to interact with the tab whilst using Facebook as the page (the like button disappears), you need to disable the like gate for admins only:
+
+		prod:
+		  facebook:
+		    like_gate:
+		      enabled:           true
+		      enabled_for_admin: false   # disable for "use as page"

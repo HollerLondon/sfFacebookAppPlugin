@@ -49,9 +49,15 @@ class sfFacebookSignedRequestFilter extends sfFilter
           // check if a user has liked the page & redirect if they haven't
           if (!$data['page']['liked'] && ($actionInstance->getModuleName() != $like_gate_config['module'] || $actionInstance->getActionName() != $like_gate_config['action']))
           {
-            // Dynamicaly create route from the parameter in config; this means that signed_request gets sent through properly to the like page
-            $context->getRouting()->appendRoute('fb_like', new sfRoute(sprintf('/%s/%s', $like_gate_config['module'], $like_gate_config['action'])));
-            $controller->redirect('@fb_like?signed_request=' . $signed_request);
+            // check if they are admin and the admin_is_enabled set to false?
+            $skip = (true === $data['page']['admin'] && (!isset($like_gate_config['enabled_for_admin']) || false === $like_gate_config['enabled_for_admin']));
+            
+            if (!$skip)
+            {
+              // Dynamicaly create route from the parameter in config; this means that signed_request gets sent through properly to the like page
+              $context->getRouting()->appendRoute('fb_like', new sfRoute(sprintf('/%s/%s', $like_gate_config['module'], $like_gate_config['action'])));
+              $controller->redirect('@fb_like?signed_request=' . $signed_request);
+            }
           }
         }
       }

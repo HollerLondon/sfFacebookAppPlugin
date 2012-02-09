@@ -12,6 +12,8 @@ all:
     user_data:    [ first_name, last_name ]   # defaults - fb_uid also included
     
     like_gate:
-      enabled:    true
-      module:     sfFacebookAppTab
-      action:     like
+      enabled:            true
+      # if want to be able to get past the like gate as a page, have to disable this setting
+      enabled_for_admin:  true       
+      module:             sfFacebookAppTab
+      action:             like
