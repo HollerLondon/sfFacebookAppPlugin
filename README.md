@@ -57,3 +57,16 @@ Instructions
 		    like_gate:
 		      enabled:           true
 		      enabled_for_admin: false   # disable for "use as page"
+		      
+	* If you want to Google track the source of incoming tab links, you'll want to enable the tracking - not implemented for canvas apps
+	
+	  # If creating a tab make sure you use /tab as the starting url - this will then implement the
+    # google tracking properly
+    tracking:
+      enabled:            true
+      prefix:             source_
+      utm_campaign:       CAMPAIGN
+      utm_medium:         MEDIUM
+      
+  * NOTE: You'll need to make sure when linking to a tab or doing any redirects you include the app_data with the required source - e.g: TAB_URL?app_data=source_SOURCE
+  

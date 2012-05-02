@@ -13,8 +13,7 @@ auth_scope:
   url:   /auth/:scope
   param: { module: sfFacebookAppTab, action: authAdditional }
   
-  
-# fb_like:
+# fb_like:   # generated automatically by filter and config
 #   url:   /like
 #   param: { module: sfFacebookAppTab, action: like }
   

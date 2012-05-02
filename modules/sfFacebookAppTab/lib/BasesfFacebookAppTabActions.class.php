@@ -17,8 +17,21 @@ class BasesfFacebookAppTabActions extends sfActions
    */
   public function executeTab(sfWebRequest $request)
   {
-    $home_route = sfConfig::get('app_facebook_homepage', '@homepage');
-    $this->redirect($home_route . '?signed_request=' . $this->signed_request);
+    $trackingConfig = sfConfig::get('app_facebook_tracking');
+    $routeParams    = array('signed_request' => $this->signed_request);
+    
+    // URL?utm_source=SOURCE&utm_medium=MEDIUM&utm_campaign=CAMPAIGN
+    // Do we have information to track source of link?
+    if ($trackingConfig['enabled'] && isset($this->data['app_data']) && sfConfig::get('app_facebook_app_data') != $this->data['app_data'])
+    {
+      $routeParams['utm_medium']   = $trackingConfig['utm_medium'];
+      $routeParams['utm_campaign'] = $trackingConfig['utm_campaign'];
+      $routeParams['utm_source']   = str_replace($trackingConfig['prefix'], '', $this->data['app_data']);
+    }
+    
+    $home_route = sprintf('%s?%s', sfConfig::get('app_facebook_homepage', '@homepage'), http_build_query($routeParams));
+    
+    $this->redirect($home_route);
   }
   
   /**
@@ -28,24 +41,18 @@ class BasesfFacebookAppTabActions extends sfActions
    */
   public function executeAuth(sfWebRequest $request)
   {
-    $app_data   = '?app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
+    $routeParams = array(
+      'app_data' => $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'))
+    );
     $app_scope  = '&scope=' . sfConfig::get('app_facebook_app_scope');
     
-    sfProjectConfiguration::getActive()->loadHelpers('Url');
-    
     // check if we have a signed_request
-    if($request->hasParameter('signed_request'))
+    if ($request->hasParameter('signed_request'))
     {
-      $signed_request = '&signed_request=' . $request->getParameter('signed_request');
-    }
-    else
-    {
-      $signed_request = '';
+      $routeParams['signed_request'] = $request->getParameter('signed_request');
     }
     
-    //$app_url    = urlencode(sfConfig::get('app_facebook_app_url') . $app_data);
-    // @TODO: refactor to use $this->generateUrl();
-    $app_url    = urlencode(url_for('@redirect'.$app_data.$signed_request, array('absolute' => true)));
+    $app_url    = urlencode($this->generateUrl('redirect', $routeParams, true));
     $dialog_url = 'http://www.facebook.com/dialog/oauth?client_id=' . sfConfig::get('app_facebook_app_id') . $app_scope;
     
     $auth_url   = '<script>top.location.href="' . $dialog_url . '&redirect_uri=' . $app_url . '"</script>';
@@ -61,23 +68,18 @@ class BasesfFacebookAppTabActions extends sfActions
    */
   public function executeAuthAdditional(sfWebRequest $request)
   {
-    $app_data   = '?app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
+    $routeParams = array(
+      'app_data' => $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'))
+    );
     $app_scope  = '&scope=' . $request->getParameter('scope');
-    
-    sfProjectConfiguration::getActive()->loadHelpers('Url');
     
     // check if we have a signed_request
     if ($request->hasParameter('signed_request'))
     {
-      $signed_request = '&signed_request=' . $request->getParameter('signed_request');
-    }
-    else
-    {
-      $signed_request = '';
+      $routeParams['signed_request'] = $request->getParameter('signed_request');
     }
     
-    // @TODO: refactor to use $this->generateUrl();
-    $app_url    = urlencode(url_for('@redirect'.$app_data.$signed_request, array('absolute' => true)));
+    $app_url    = urlencode($this->generateUrl('redirect', $routeParams, true));
     $dialog_url = 'http://www.facebook.com/dialog/oauth?client_id=' . sfConfig::get('app_facebook_app_id') . $app_scope;
     
     $auth_url   = '<script>top.location.href="' . $dialog_url . '&redirect_uri=' . $app_url . '"</script>';
