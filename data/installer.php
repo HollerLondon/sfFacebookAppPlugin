@@ -1,7 +1,6 @@
 <?php
-$this->logSection('Install', 'Create frontend application and tab module');
+$this->logSection('Install', 'Create frontend application and loading files');
 $this->runTask('generate:app', 'frontend');
-$this->runTask('generate:module', 'frontend tab');
 
 $this->installDir(dirname(__FILE__).'/files');
 
@@ -15,14 +14,15 @@ rename(sfConfig::get('sf_config_dir') . '/databases.yml', sfConfig::get('sf_conf
 $this->logSection('Overwriting...', 'frontend_dev.php');
 copy(dirname(__FILE__).'/files/web/frontend_dev.php', sfConfig::get('sf_web_dir').'/frontend_dev.php');
 
-$this->logSection('Overwriting...', 'filters.yml');
-copy(dirname(__FILE__).'/files/apps/frontend/config/filters.yml', sfConfig::get('sf_apps_dir').'/frontend/config/filters.yml');
+$this->logSection('Overwriting...', 'ProjectConfiguration.class.php');
+copy(dirname(__FILE__).'/files/config/ProjectConfiguration.class.php', sfConfig::get('sf_config_dir').'/ProjectConfiguration.class.php');
 
-$this->logSection('Overwriting...', 'settings.yml');
-copy(dirname(__FILE__).'/files/apps/frontend/config/settings.yml', sfConfig::get('sf_apps_dir').'/frontend/config/settings.yml');
+$this->logSection('Overwriting...', 'frontend config');
 
-$this->logSection('Overwriting...', 'view.yml');
-copy(dirname(__FILE__).'/files/apps/frontend/config/view.yml', sfConfig::get('sf_apps_dir').'/frontend/config/view.yml');
+foreach (array('filters.yml', 'app.yml', 'view.yml', 'settings.yml', 'routing.yml') as $file)
+{
+  copy(dirname(__FILE__).'/files/apps/frontend/config/'.$file, sfConfig::get('sf_apps_dir').'/frontend/config/'.$file);
+}
 
 $this->logSection('Overwriting...', 'layout.php');
 copy(dirname(__FILE__).'/files/apps/frontend/templates/layout.php', sfConfig::get('sf_apps_dir').'/frontend/templates/layout.php');
