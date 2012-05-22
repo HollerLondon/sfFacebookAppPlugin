@@ -37,7 +37,7 @@ Instructions
 
  6. If you want to request additional permissions (not in the regular scope)
 
-		 $additionalScope = 'email';
+         $additionalScope = 'email';
          if (false === $this->access_token) $this->redirect(sprintf('@auth_scope?scope=%s&signed_request=%s', $additionalScope, $request->getParameter('signed_request')));
 
  7. If you want to be able to interact with the tab whilst using Facebook as the page (the like button disappears), you need to disable the like gate for admins only:
@@ -52,11 +52,11 @@ Instructions
     * If creating a tab make sure you use /tab as the starting url - this will then implement the google tracking properly
     * NOTE: You'll need to make sure when linking to a tab or doing any redirects you include the `?app_data` with the required source - e.g: `TAB_URL?app_data=source_SOURCE`
 
-         tracking:
-           enabled:            true
-           prefix:             source_
-           utm_campaign:       CAMPAIGN
-           utm_medium:         MEDIUM
+           tracking:
+             enabled:            true
+             prefix:             source_
+             utm_campaign:       CAMPAIGN
+             utm_medium:         MEDIUM
 
 ## Existing project 
 
