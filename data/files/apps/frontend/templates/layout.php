@@ -12,7 +12,7 @@
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId  : '<?php echo sfConfig::get("app_facebook_app_id"); ?>',
+          appId  : '<?php echo sfConfig::get('app_facebook_app_id'); ?>',
           status : true,
           cookie : true,
           xfbml  : true
