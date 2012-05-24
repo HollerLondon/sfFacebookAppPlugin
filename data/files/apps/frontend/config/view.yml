@@ -15,7 +15,7 @@ default:
   stylesheets:    [screen.css]
 
   javascripts:
-    - https://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools-yui-compressed.js: { position: first }
+    - https://c165296.ssl.cf3.rackcdn.com/mootools-core-1.4.5-compressed.js: { position: first }
     - main.js
 
   has_layout:     true
