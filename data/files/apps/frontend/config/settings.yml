@@ -34,6 +34,9 @@ all:
     # Enable the database manager
     use_database:           true
     
+    # Respect project disabling
+    check_lock:             true
+    
     enabled_modules:
       - default
       - sfFacebookAppTab
