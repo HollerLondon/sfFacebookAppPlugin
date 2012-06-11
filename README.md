@@ -81,7 +81,7 @@ Add this plugin to your `plugins` folder
 
  2. And enable the module in the app's `settings.yml`
 
-       enabled_modules:        [ sfFacebookAppTab ]
+        enabled_modules:        [ sfFacebookAppTab ]
 
  3. Include the signed request filter in the app's `filters.yml`
 
