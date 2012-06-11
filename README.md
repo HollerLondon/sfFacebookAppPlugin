@@ -39,12 +39,6 @@ Add the Facebook SDK to your `lib/vendor` folder
 Add this plugin to your `plugins` folder
  
     sfFacebookAppPlugin   https://github.com/HollerLondon/sfFacebookAppPlugin.git/trunk
-    
-Enable plugin in ProjectConfiguration
-
-And enable the module in the app's `settings.yml`
-
-    enabled_modules:        [ sfFacebookAppTab ]
 
 
 ## New project
@@ -83,17 +77,23 @@ And enable the module in the app's `settings.yml`
 
 ## Existing project 
 
- 1. Include the signed request filter in the app's `filters.yml`
+ 1. Enable plugin in ProjectConfiguration
+
+ 2. And enable the module in the app's `settings.yml`
+
+       enabled_modules:        [ sfFacebookAppTab ]
+
+ 3. Include the signed request filter in the app's `filters.yml`
 
         # insert your own filters here
         sfFacebookApp:
           class: sfFacebookSignedRequestFilter
           
- 2. And configure `config/autoload.yml` to include the Facebook SDK:
+ 4. And configure `config/autoload.yml` to include the Facebook SDK:
 
         autoload:
           fb_sdk:
             name:       facebook
             path:       %SF_LIB_DIR%/vendor/facebook/src
             
- 3. Follow above from step 3.
+ 5. Follow above from step 3.
