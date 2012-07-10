@@ -62,10 +62,14 @@ class sfFacebookAppUtil
     // If already in session return that
     if (isset($user_data[$user_data_required[0]]) && !empty($user_data[$user_data_required[0]]))
     {
-      // Unless we've changed the user fields
-      if (count($user_data_required) == (count($user_data) - 1)) // -1 is for fb_uid
+      // Unless it's old session data for a different user
+      if ($data['user_id'] === $user_data['fb_uid'])
       {
-        return $user_data;
+        // Or, unless we've changed the user fields
+        if (count($user_data_required) == (count($user_data) - 1)) // -1 is for fb_uid
+        {
+          return $user_data;
+        }
       }
     }
     
