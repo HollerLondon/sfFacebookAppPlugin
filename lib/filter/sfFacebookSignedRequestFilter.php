@@ -43,6 +43,10 @@ class sfFacebookSignedRequestFilter extends sfFilter
         
       if (isset($like_gate_config['enabled']) && true === $like_gate_config['enabled'])
       {
+        // Dynamicaly create route from the parameter in config; this means that signed_request gets sent through properly to the like page
+        $context->getRouting()->appendRoute('fb_like', new sfRoute(sprintf('/%s/%s', $like_gate_config['module'], $like_gate_config['action']), 
+                                                                    array('module'=>$like_gate_config['module'], 'action'=>$like_gate_config['action'])));
+        
         // If we have no data - make them like the page :)
         if (!empty($data) && isset($data['page']))
         {
@@ -54,8 +58,6 @@ class sfFacebookSignedRequestFilter extends sfFilter
             
             if (!$skip)
             {
-              // Dynamicaly create route from the parameter in config; this means that signed_request gets sent through properly to the like page
-              $context->getRouting()->appendRoute('fb_like', new sfRoute(sprintf('/%s/%s', $like_gate_config['module'], $like_gate_config['action'])));
               $controller->redirect('@fb_like?signed_request=' . $signed_request);
             }
           }
