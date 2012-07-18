@@ -14,7 +14,7 @@ auth_scope:
   param: { module: sfFacebookAppTab, action: authAdditional }
   
 # fb_like:   # add with correct parameters if have removed default routes and want a working like gate ;)
-#   url:   /like
+#   url:   /tab/like
 #   param: { module: sfFacebookAppTab, action: like }
   
 redirect:
