@@ -23,7 +23,7 @@ To make API calls, rather than instantiating an instance of the Facebook SDK, us
 Dependancies:
 -------------
 
- * Facebook SDK: https://github.com/facebook/php-sdk
+ * Facebook SDK: https://github.com/facebook/facebook-php-sdk
 
 Instructions
 ------------
@@ -34,7 +34,7 @@ NOTE: svn:externals included below.
 
 Add the Facebook SDK to your `lib/vendor` folder
  
-    facebook              https://github.com/facebook/php-sdk.git/trunk
+    facebook              https://github.com/facebook/facebook-php-sdk.git/trunk
     
 Add this plugin to your `plugins` folder
  
