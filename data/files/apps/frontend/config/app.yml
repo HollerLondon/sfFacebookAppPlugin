@@ -6,7 +6,8 @@ all:
   facebook:
     app_id:               
     app_secret:           
-    app_url:              
+    app_url:                                                     # Tab url for redirects
+    canvas_url:           http://apps.facebook.com/NAMESPACE/    # Canvas app url for share / linking so mobile works
    
     app_scope:            
     user_data:            [ first_name, last_name ]   # defaults - fb_uid also included
