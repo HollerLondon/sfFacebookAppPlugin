@@ -6,6 +6,10 @@
     <?php include_title() ?>
     <link rel="shortcut icon" href="/favicon.ico" />
     <?php include_stylesheets() ?>
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" type="text/css" href="/css/ie.css" />
+    <![endif]-->
+    <?php include_javascripts() ?>
   </head>
   <body>
     <div id="fb-root"></div>
@@ -20,6 +24,13 @@
         FB.Canvas.setAutoGrow();
         FB.Canvas.setSize();
         //FB.Canvas.scrollTo(0,0);
+        
+        // To fix issues with whitespace
+        // Set shortest page height (don't include error pages) - will intefere with scrollTo / # targeting
+        //FB.Canvas.setSize({ width: 810, height: xxxx }); 
+        //setTimeout(FB.Canvas.setAutoGrow, 250); // This is the lowest timeout possible
+        
+        <?php if (has_slot('fb_js')) include_slot('fb_js'); ?>
       };
       // Load async as causing scrollbars in FF4 otherwise
       (function() {
@@ -30,7 +41,7 @@
       }());
     </script>
     
-    <div id="wrapper">
+    <div id="wrapper"<?php if ($sf_user->isMobile()) echo ' class="mobile"'; ?>>
       <div id="header">
         
       </div>
@@ -43,7 +54,5 @@
         
       </div>
     </div>
-      
-    <?php include_javascripts() ?>
   </body>
 </html>

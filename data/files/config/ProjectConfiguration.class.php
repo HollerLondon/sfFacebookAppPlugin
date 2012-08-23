@@ -5,8 +5,23 @@ sfCoreAutoload::register();
 
 class ProjectConfiguration extends sfProjectConfiguration
 {
+  /**
+   * Enable all plugins
+   */
   public function setup()
   {
     $this->enableAllPluginsExcept('sfPropelPlugin');
+  }
+  
+  /**
+   * Set nice database bits here
+   * 
+   * @param Doctrine_Manager $manager
+   */
+  public function configureDoctrine(Doctrine_Manager $manager)
+  {
+    $manager->setAttribute(Doctrine::ATTR_USE_NATIVE_ENUM, true);
+    $manager->setAttribute(Doctrine::ATTR_DEFAULT_TABLE_CHARSET, 'utf8');
+    $manager->setAttribute(Doctrine::ATTR_DEFAULT_TABLE_COLLATE, 'utf8_general_ci');
   }
 }

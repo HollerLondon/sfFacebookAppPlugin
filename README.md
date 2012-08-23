@@ -24,6 +24,13 @@ Dependancies:
 -------------
 
  * Facebook SDK: https://github.com/facebook/facebook-php-sdk
+ 
+Additional Plugin installed:
+----------------------------
+
+ * sfMobilePlugin: https://github.com/HollerLondon/sfMobilePlugin (All apps need to have a mobile page - even if it's just a landing page directing them to the tab)
+ * sfDoctrineGuardPlugin: http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin (For mobile auth / backend)
+ * sfGoogleAnalyticsPlugin: http://www.symfony-project.org/plugins/sfGoogleAnalyticsPlugin (For mobile / custom tracking)
 
 Instructions
 ------------
@@ -31,12 +38,8 @@ Instructions
 ## All projects 
 
 NOTE: svn:externals included below.
-
-Add the Facebook SDK to your `lib/vendor` folder
- 
-    facebook              https://github.com/facebook/facebook-php-sdk.git/trunk
     
-Add this plugin to your `plugins` folder
+Add the plugin to your `plugins` folder (NOTE: the installer will take care of the rest)
  
     sfFacebookAppPlugin   https://github.com/HollerLondon/sfFacebookAppPlugin.git/trunk
 
@@ -51,12 +54,12 @@ Add this plugin to your `plugins` folder
  3. Create a Facebook app and fill in your Facebook app details in the frontend `app.yml`, NOTE: If creating a Facebook tab make sure you use YOUR_URL/tab as the starting url 
  4. Then, in the action where you want to authorise the app with the user add:
 
-        if (false === $this->access_token) $this->redirect('@auth?signed_request='.$request->getParameter('signed_request'));
+        if (false === $this->access_token && $this->signed_request) $this->redirect('@auth?signed_request='.$this->signed_request);
 
  5. If you want to request additional permissions (not in the regular scope)
 
          $additionalScope = 'email';
-         if (false === $this->access_token) $this->redirect(sprintf('@auth_scope?scope=%s&signed_request=%s', $additionalScope, $request->getParameter('signed_request')));
+         if (false === $this->access_token && $this->signed_request) $this->redirect(sprintf('@auth_scope?scope=%s&signed_request=%s', $additionalScope, $this->signed_request));
 
  6. If you want to be able to interact with the tab whilst using Facebook as the page (the like button disappears), you need to disable the like gate for admins only:
 
@@ -77,23 +80,25 @@ Add this plugin to your `plugins` folder
 
 ## Existing project 
 
- 1. Enable plugin in ProjectConfiguration
+ 1. Install the extra plugins and vendors mentioned above
 
- 2. And enable the module in the app's `settings.yml`
+ 2. Enable plugin in ProjectConfiguration
+
+ 3. And enable the module in the app's `settings.yml`
 
         enabled_modules:        [ sfFacebookAppTab ]
 
- 3. Include the signed request filter in the app's `filters.yml`
+ 4. Include the signed request filter in the app's `filters.yml`
 
         # insert your own filters here
         sfFacebookApp:
           class: sfFacebookSignedRequestFilter
           
- 4. And configure `config/autoload.yml` to include the Facebook SDK:
+ 5. And configure `config/autoload.yml` to include the Facebook SDK:
 
         autoload:
           fb_sdk:
             name:       facebook
             path:       %SF_LIB_DIR%/vendor/facebook/src
             
- 5. Follow above from step 3.
+ 6. Follow above from step 3.

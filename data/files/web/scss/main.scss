@@ -1,0 +1,25 @@
+@import "compass/reset";
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+@import "compass/typography/text/replacement";
+@import "compass/utilities/sprites";
+
+@import "partials/base";
+
+// mobile is default
+@import "partials/mobile";
+
+// target desktops
+@media screen and (min-width: 768px) {
+  @import "partials/tab";
+}
+
+// retina high density mobile devices
+@media
+  only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (-o-min-device-pixel-ratio: 3/2),
+  only screen and (min--moz-device-pixel-ratio: 1.5),
+  only screen and (min-device-pixel-ratio: 1.5)
+{
+  @import 'partials/hdpi';
+}

@@ -6,11 +6,10 @@ homepage:
   url:   /
   param: { module: tab, action: index }
 
-# generic rules
-# please, remove them by adding more specific rules
-default_index:
-  url:   /:module
-  param: { action: index }
+fb_like:
+  url:   /tab/like
+  param:  { module: tab, action: like }
 
-default:
-  url:   /:module/:action/*
+mobile:
+  url:    /mobile
+  param: { module: tab, action: mobile }

@@ -6,13 +6,16 @@ default:
     content-type: text/html
 
   metas:
+    apple-mobile-web-app-capable:   "yes"
+    viewport:                       "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    
     #title:        symfony project
     #description:  symfony project
     #keywords:     symfony, project
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [screen.css]
+  stylesheets:    [main.css]
 
   javascripts:
     - https://c165296.ssl.cf3.rackcdn.com/mootools-core-1.4.5-compressed.js: { position: first }

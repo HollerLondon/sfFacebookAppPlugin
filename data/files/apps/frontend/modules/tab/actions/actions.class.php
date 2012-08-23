@@ -20,6 +20,17 @@ class tabActions extends sfActions
   }
   
   /**
+  * Executes mobile action
+  * 
+  * IMPORTANT: We need to have a mobile page - even if it's just a landing page directing them to the tab 
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobile(sfWebRequest $request)
+  {
+  }
+  
+  /**
   * Executes like action
   *
   * @param sfRequest $request A request object
