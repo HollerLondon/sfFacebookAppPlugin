@@ -1,0 +1,21 @@
+sfGuardUser:
+  User_admin:
+    id:             1
+    first_name:     Holler
+    last_name:      Admin
+    email_address:  sysadmin@holler.co.uk
+    username:       admin
+    password:       admin
+    is_super_admin: true
+    Groups:         [Group_admin]
+
+sfGuardGroup:
+  Group_admin:
+    name:           admin
+    description:    Administrator group
+    Permissions:    [Permission_admin]
+
+sfGuardPermission:
+  Permission_admin:
+    name:           admin
+    description:    Administrator permission
