@@ -29,6 +29,7 @@ $this->logSection('Install', 'Create frontend application');
 $this->runTask('generate:app', 'frontend');
 
 $this->logSection('Install', 'Loading and configuring project files');
+
 if ($isSubversion)
 {
   $this->logSection('file+', $tmp = sfConfig::get('sf_cache_dir').'/svnprop.tmp');
@@ -44,14 +45,19 @@ if ($isSubversion)
 $filesystem->remove(sfConfig::get('sf_upload_dir').'/assets');
 $filesystem->remove(sfConfig::get('sf_config_dir').'/ProjectConfiguration.class.php');
 $filesystem->remove(sfConfig::get('sf_web_dir').'/frontend_dev.php');
+$filesystem->remove(sfConfig::get('sf_web_dir').'/css/main.css');
 $filesystem->remove(sfConfig::get('sf_apps_dir').'/frontend/templates/layout.php');
 $filesystem->remove(sfConfig::get('sf_apps_dir').'/frontend/lib/myUser.class.php');
+
 foreach (array('filters.yml', 'app.yml', 'view.yml', 'settings.yml', 'routing.yml') as $file)
 {
   $filesystem->remove(sfConfig::get('sf_apps_dir').'/frontend/config/'.$file);
 }
+
+// Installing base files
 $this->installDir(dirname(__FILE__).'/files');
 
+// Sort out databases.yml
 rename(sfConfig::get('sf_config_dir') . '/databases.yml', sfConfig::get('sf_config_dir') . '/databases.yml-dist');
 
 if ($isSubversion)
