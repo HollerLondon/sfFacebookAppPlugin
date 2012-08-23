@@ -96,7 +96,7 @@ if ($isSubversion)
   {
     $externals .= $name.' '.$path.PHP_EOL;
   }
-  _exec('svn ps svn:externals %s %s', trim($externals), sfConfig::get('sf_lib_dir').'/vendors');
+  _exec('svn ps svn:externals %s %s', trim($externals), sfConfig::get('sf_lib_dir').'/vendor');
 }
 
 $this->logSection('Finished', 'ALL DONE - now svn up and commit');
