@@ -17,6 +17,34 @@ class tabActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+    // If in Facebook
+    if (!empty($this->data))
+    {
+      // If on app canvas page - not tab - redirect to tab
+      if (!isset($this->data['page']))
+      {
+        sfConfig::set('sf_web_debug', false);
+        return $this->renderText(sprintf('<script>top.location.href="%s"</script>', sfConfig::get('app_facebook_app_url')));
+      }
+      else if (isset($this->data['app_data']))
+      {
+        // Do something with app_data
+      }
+    }
+    // If come directly to site - / url
+    else
+    {
+      // Mobile user - take to mobile site
+      if ($this->getUser()->isMobile())
+      {
+        $this->redirect('@mobile');
+      }
+      // Take to tab
+      else
+      {
+        $this->redirect(sfConfig::get('app_facebook_app_url'));
+      }
+    }
   }
   
   /**
