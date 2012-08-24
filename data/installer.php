@@ -49,7 +49,7 @@ $filesystem->remove(sfConfig::get('sf_web_dir').'/css/main.css');
 $filesystem->remove(sfConfig::get('sf_apps_dir').'/frontend/templates/layout.php');
 $filesystem->remove(sfConfig::get('sf_apps_dir').'/frontend/lib/myUser.class.php');
 
-foreach (array('filters.yml', 'app.yml', 'view.yml', 'settings.yml', 'routing.yml') as $file)
+foreach (array('filters.yml', 'app.yml', 'view.yml', 'settings.yml', 'routing.yml', 'factories.yml') as $file)
 {
   $filesystem->remove(sfConfig::get('sf_apps_dir').'/frontend/config/'.$file);
 }
@@ -59,6 +59,9 @@ $this->installDir(dirname(__FILE__).'/files');
 
 // Sort out databases.yml
 rename(sfConfig::get('sf_config_dir') . '/databases.yml', sfConfig::get('sf_config_dir') . '/databases.yml-dist');
+
+// Project name
+$filesystem->replaceTokens(sfConfig::get('sf_apps_dir').'/frontend/config/factories.yml', '##', '##', array('PROJECTNAME' => str_replace(' ', '_', strtolower($properties['symfony']['name']))));
 
 if ($isSubversion)
 {
