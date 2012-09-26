@@ -20,8 +20,9 @@ class ProjectConfiguration extends sfProjectConfiguration
    */
   public function configureDoctrine(Doctrine_Manager $manager)
   {
-    $manager->setAttribute(Doctrine::ATTR_USE_NATIVE_ENUM, true);
-    $manager->setAttribute(Doctrine::ATTR_DEFAULT_TABLE_CHARSET, 'utf8');
-    $manager->setAttribute(Doctrine::ATTR_DEFAULT_TABLE_COLLATE, 'utf8_general_ci');
+    $manager->setAttribute(Doctrine_Core::ATTR_USE_NATIVE_ENUM, true);
+    $manager->setAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_CHARSET, 'utf8');
+    $manager->setAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_COLLATE, 'utf8_general_ci');
+    $manager->setAttribute(Doctrine_Core::ATTR_QUERY_LIMIT, Doctrine_Core::LIMIT_ROWS);
   }
 }
