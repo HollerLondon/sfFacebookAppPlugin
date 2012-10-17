@@ -66,7 +66,7 @@ $filesystem->replaceTokens(sfConfig::get('sf_apps_dir').'/frontend/config/factor
 if ($isSubversion)
 {
   // Add files
-  _exec('svn add symfony test/* apps/frontend/modules/* config/* lib/form/* web/* web/.htaccess data/fixtures');
+  _exec('svn add symfony test/* apps/frontend/modules/* apps/frontend/config/error apps/frontend/config/unavailable.php config/* lib/form/* web/* web/.htaccess data/fixtures');
   
   // Global ignore
   file_put_contents($tmp, '.sass-cache');
