@@ -22,7 +22,7 @@ class BasesfFacebookAppTabActions extends sfActions
     
     // URL?utm_source=SOURCE&utm_medium=MEDIUM&utm_campaign=CAMPAIGN
     // Do we have information to track source of link?
-    if ($trackingConfig['enabled'] && isset($this->data['app_data']) && false !== strstr($app_data, $trackingConfig['prefix']))
+    if ($trackingConfig['enabled'] && isset($this->data['app_data']) && false !== strstr($this->data['app_data'], $trackingConfig['prefix']))
     {
       $routeParams['utm_medium']   = $trackingConfig['utm_medium'];
       $routeParams['utm_campaign'] = $trackingConfig['utm_campaign'];
