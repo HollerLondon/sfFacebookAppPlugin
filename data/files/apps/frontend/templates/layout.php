@@ -22,7 +22,7 @@
           xfbml  : true
         });
         FB.Canvas.setAutoGrow();
-        FB.Canvas.setSize();
+        //FB.Canvas.setSize();
         //FB.Canvas.scrollTo(0,0);
         
         // To fix issues with whitespace
