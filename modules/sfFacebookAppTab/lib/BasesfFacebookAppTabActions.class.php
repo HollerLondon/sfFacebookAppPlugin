@@ -11,7 +11,8 @@
 class BasesfFacebookAppTabActions extends sfActions
 {
   /**
-   * Default tab action that redirects to the @homepage route
+   * Default tab action that redirects to the @homepage route, 
+   * processes signed_request and tracking
    * 
    * @param sfWebRequest $request
    */
@@ -20,15 +21,49 @@ class BasesfFacebookAppTabActions extends sfActions
     $trackingConfig = sfConfig::get('app_facebook_tracking');
     $routeParams    = array('signed_request' => $this->signed_request);
     
+    // ?app_data=source_TRACKINGDATA
     // URL?utm_source=SOURCE&utm_medium=MEDIUM&utm_campaign=CAMPAIGN
     // Do we have information to track source of link?
-    if ($trackingConfig['enabled'] && isset($this->data['app_data']) && false !== strstr($this->data['app_data'], $trackingConfig['prefix']))
-    {
+    if ($trackingConfig['enabled'] && isset($this->data['app_data']) && false !== strstr($this->data['app_data'], $trackingConfig['prefix'])) {
       $routeParams['utm_medium']   = $trackingConfig['utm_medium'];
       $routeParams['utm_campaign'] = $trackingConfig['utm_campaign'];
       $routeParams['utm_source']   = str_replace($trackingConfig['prefix'], '', $this->data['app_data']);
     }
     
+    $home_route = sprintf('%s?%s', sfConfig::get('app_facebook_homepage', '@homepage'), http_build_query($routeParams));
+    
+    $this->redirect($home_route);
+  }
+  
+  /**
+   * Canvas action to ensure signed_request is GET not POST param - and to process tracking, etc
+   * Redirects to the @homepage route, as above (with amends)
+   * 
+   * @param sfWebRequest $request
+   */
+  public function executeCanvas(sfWebRequest $request)
+  {
+    $trackingConfig = sfConfig::get('app_facebook_tracking');
+    $app_data       = $request->getParameter('app_data');
+    $routeParams    = array('signed_request' => $this->signed_request);
+
+    // append request_ids to redirect url if exist
+    if ($request->hasParameter('request_ids')) {
+      $routeParams['request_ids'] = $request->getParameter('request_ids');
+    }
+
+    // ?app_data=source_TRACKINGDATA
+    // URL?utm_source=SOURCE&utm_medium=MEDIUM&utm_campaign=CAMPAIGN
+    // Do we have information to track source of link?
+    if ($trackingConfig['enabled'] && !empty($app_data) && false !== strstr($app_data, $trackingConfig['prefix'])) {
+      $routeParams['utm_medium']   = $trackingConfig['utm_medium'];
+      $routeParams['utm_campaign'] = $trackingConfig['utm_campaign'];
+      $routeParams['utm_source']   = str_replace($trackingConfig['prefix'], '', $app_data);
+    }
+    else if (!empty($app_data)) {
+      $routeParams['app_data'] = $app_data;
+    }
+
     $home_route = sprintf('%s?%s', sfConfig::get('app_facebook_homepage', '@homepage'), http_build_query($routeParams));
     
     $this->redirect($home_route);
@@ -47,8 +82,7 @@ class BasesfFacebookAppTabActions extends sfActions
     $app_scope  = '&scope=' . sfConfig::get('app_facebook_app_scope');
     
     // check if we have a signed_request
-    if ($request->hasParameter('signed_request'))
-    {
+    if ($request->hasParameter('signed_request')) {
       $routeParams['signed_request'] = $request->getParameter('signed_request');
     }
     
@@ -74,8 +108,7 @@ class BasesfFacebookAppTabActions extends sfActions
     $app_scope  = '&scope=' . $request->getParameter('scope');
     
     // check if we have a signed_request
-    if ($request->hasParameter('signed_request'))
-    {
+    if ($request->hasParameter('signed_request')) {
       $routeParams['signed_request'] = $request->getParameter('signed_request');
     }
     
@@ -99,12 +132,18 @@ class BasesfFacebookAppTabActions extends sfActions
     // set this for a url other than a facebook tab
     $app_url = sfConfig::get('app_facebook_redirect_url', sfConfig::get('app_facebook_app_url'));
     
-    $app_data   = 'app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
+    // If denied auth - then send through auth_error parameter - so don't get stuck in auth loop
+    if ($request->hasParameter('error')) {
+      $app_data   = 'app_data=auth_error';
+    }
+    else {
+      $app_data   = 'app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
+    }
     
     // check if app_url contains a question mark or not
     $app_query = '&';
-    if( false === strrpos($app_url, '?') )
-    {
+    
+    if (false === strrpos($app_url, '?')) {
       $app_query = '?';
     }
     
