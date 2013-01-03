@@ -140,12 +140,14 @@ class sfFacebook extends Facebook
           $params = array('client_id' => $this->getAppId(),
                           'client_secret' => $this->getAppSecret(),
                           'redirect_uri' => $redirect_uri,
-                          'code' => $code));
-    } catch (FacebookApiException $e) {
+                          'code' => $code,
+                          'access_token' => '')); // Access token is being retrieved here - so set to blank, otherwise throws session errors
+    } 
+    catch (FacebookApiException $e) {
       // most likely that user very recently revoked authorization.
       // In any event, we don't have an access token, so say so.
       return false;
-    }
+    } 
 
     if (empty($access_token_response)) {
       return false;
@@ -156,7 +158,7 @@ class sfFacebook extends Facebook
     if (!isset($response_params['access_token'])) {
       return false;
     }
-
+    
     return $response_params;
   }
   
