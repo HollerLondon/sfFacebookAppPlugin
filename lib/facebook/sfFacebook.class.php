@@ -201,8 +201,6 @@ class sfFacebook extends Facebook
       return false;
     }
 
-    $this->destroySession();
-
     $this->setPersistentData(
       'access_token', $response_params['access_token']
     );
