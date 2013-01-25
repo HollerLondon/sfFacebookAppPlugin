@@ -3,6 +3,13 @@ var MOBILE = {
    * Init mobile auth
    */
   init : function() {
+    // Scroll to hide address bar on mobile (iOS / Android) - timeout is necessary
+    if ($('#wrapper').hasClass('mobile')) {
+      setTimeout(function() {
+        try { window.scrollTo(0, 1); } catch(e) { }
+      }, 0);
+    }
+    
     if ($('#fb-logout')) $(document).on('click', '#fb-logout', MOBILE.logout);
     
     // If hooking into a class for auth then add here too
@@ -91,13 +98,6 @@ $(document).ready(function() {
   
   // IE fix for errant console.log
   if (typeof console === "undefined") console = { log: function() { } };
-  
-  // Scroll to hide address bar on mobile (iOS / Android) - timeout is necessary
-  if ($('#wrapper').hasClass('mobile')) {
-    setTimeout(function() {
-      try { window.scrollTo(0, 1); } catch(e) { }
-    }, 0);
-  }
   
   // MOBILE auth
   MOBILE.init();
