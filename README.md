@@ -1,9 +1,9 @@
 sfFacebookAppPlugin
 =========================
 
-@author:    Jimmy Wong (<jimmywong@holler.co.uk>), Ben Lancaster (<benlancaster@holler.co.uk>), Jo Carter (<jocarter@holler.co.uk>)
+@author:    Jo Carter (<jocarter@holler.co.uk>), Jimmy Wong (<jimmywong@holler.co.uk>), Ben Lancaster (<benlancaster@holler.co.uk>)
 
-@version:   0.2a
+@version:   0.5a
 
 
 Introduction
@@ -101,4 +101,4 @@ Add the plugin to your `plugins` folder (NOTE: the installer will take care of t
             name:       facebook
             path:       %SF_LIB_DIR%/vendor/facebook/src
             
- 6. Follow above from step 3.
+ 6. Follow above from step 3. (NOTE that the installer does a lot of the groundwork for you - so have a look at the files in there)
