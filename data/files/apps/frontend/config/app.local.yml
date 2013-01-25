@@ -5,3 +5,5 @@ dev:
     app_secret:           
     app_url:                                                     # Tab url for redirects
     canvas_url:           http://apps.facebook.com/NAMESPACE/    # Canvas app url for share / linking so mobile works
+    #redirect_url:         http://apps.facebook.com/NAMESPACE/    # If you use @auth on mobile should use canvas_url - defaults to tab url (app_url)
+    #namespace:                                                   # If using Facebook actions

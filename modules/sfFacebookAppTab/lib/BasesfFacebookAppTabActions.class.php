@@ -24,7 +24,8 @@ class BasesfFacebookAppTabActions extends sfActions
     // ?app_data=source_TRACKINGDATA
     // URL?utm_source=SOURCE&utm_medium=MEDIUM&utm_campaign=CAMPAIGN
     // Do we have information to track source of link?
-    if ($trackingConfig['enabled'] && isset($this->data['app_data']) && false !== strstr($this->data['app_data'], $trackingConfig['prefix'])) {
+    if ($trackingConfig['enabled'] && isset($this->data['app_data']) && false !== strstr($this->data['app_data'], $trackingConfig['prefix'])) 
+    {
       $routeParams['utm_medium']   = $trackingConfig['utm_medium'];
       $routeParams['utm_campaign'] = $trackingConfig['utm_campaign'];
       $routeParams['utm_source']   = str_replace($trackingConfig['prefix'], '', $this->data['app_data']);
@@ -48,19 +49,22 @@ class BasesfFacebookAppTabActions extends sfActions
     $routeParams    = array('signed_request' => $this->signed_request);
 
     // append request_ids to redirect url if exist
-    if ($request->hasParameter('request_ids')) {
+    if ($request->hasParameter('request_ids')) 
+    {
       $routeParams['request_ids'] = $request->getParameter('request_ids');
     }
 
     // ?app_data=source_TRACKINGDATA
     // URL?utm_source=SOURCE&utm_medium=MEDIUM&utm_campaign=CAMPAIGN
     // Do we have information to track source of link?
-    if ($trackingConfig['enabled'] && !empty($app_data) && false !== strstr($app_data, $trackingConfig['prefix'])) {
+    if ($trackingConfig['enabled'] && !empty($app_data) && false !== strstr($app_data, $trackingConfig['prefix'])) 
+    {
       $routeParams['utm_medium']   = $trackingConfig['utm_medium'];
       $routeParams['utm_campaign'] = $trackingConfig['utm_campaign'];
       $routeParams['utm_source']   = str_replace($trackingConfig['prefix'], '', $app_data);
     }
-    else if (!empty($app_data)) {
+    else if (!empty($app_data)) 
+    {
       $routeParams['app_data'] = $app_data;
     }
 
@@ -82,7 +86,8 @@ class BasesfFacebookAppTabActions extends sfActions
     $app_scope  = '&scope=' . sfConfig::get('app_facebook_app_scope');
     
     // check if we have a signed_request
-    if ($request->hasParameter('signed_request')) {
+    if ($request->hasParameter('signed_request')) 
+    {
       $routeParams['signed_request'] = $request->getParameter('signed_request');
     }
     
@@ -108,7 +113,8 @@ class BasesfFacebookAppTabActions extends sfActions
     $app_scope  = '&scope=' . $request->getParameter('scope');
     
     // check if we have a signed_request
-    if ($request->hasParameter('signed_request')) {
+    if ($request->hasParameter('signed_request')) 
+    {
       $routeParams['signed_request'] = $request->getParameter('signed_request');
     }
     
@@ -133,21 +139,14 @@ class BasesfFacebookAppTabActions extends sfActions
     $app_url = sfConfig::get('app_facebook_redirect_url', sfConfig::get('app_facebook_app_url'));
     
     // If denied auth - then send through auth_error parameter - so don't get stuck in auth loop
-    if ($request->hasParameter('error')) {
-      $app_data   = 'app_data=auth_error';
-    }
-    else {
-      $app_data   = 'app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
-    }
+    if ($request->hasParameter('error')) $app_data = 'app_data=auth_error';
+    else $app_data = 'app_data=' . $request->getParameter('app_data', sfConfig::get('app_facebook_app_data'));
     
     // check if app_url contains a question mark or not
     $app_query = '&';
+    if (false === strrpos($app_url, '?')) $app_query = '?';
     
-    if (false === strrpos($app_url, '?')) {
-      $app_query = '?';
-    }
-    
-    $redirect_url   = '<script>top.location.href="' . $app_url . $app_query . $app_data . '"</script>';
+    $redirect_url = '<script>top.location.href="' . $app_url . $app_query . $app_data . '"</script>';
     
     sfConfig::set('sf_web_debug',false);
     return $this->renderText($redirect_url);
@@ -164,6 +163,8 @@ class BasesfFacebookAppTabActions extends sfActions
   
   /**
    * Channel 
+   * 
+   * @param sfWebRequest $request
    */
   public function executeChannel(sfWebRequest $request)
   {

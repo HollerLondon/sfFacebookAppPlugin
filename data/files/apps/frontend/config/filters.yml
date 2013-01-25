@@ -6,7 +6,7 @@ security:  ~
 
 # insert your own filters here
 sfFacebookApp:
-  class:    sfFacebookSignedRequestFilter
+  class: sfFacebookSignedRequestFilter
 sf_google_analytics_plugin:
   class: sfGoogleAnalyticsFilter
   

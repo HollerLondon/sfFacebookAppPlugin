@@ -1,6 +1,15 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
+# Facebook auth (mobile)
+authUser:
+  url:  /user/auth
+  param: { module: tab, action: authUser }
+
+deAuthUser:
+  url:  /user/deauth
+  param: { module: tab, action: deAuthUser }
+  
 # default rules
 homepage:
   url:   /
@@ -9,7 +18,3 @@ homepage:
 fb_like:
   url:   /tab/like
   param:  { module: tab, action: like }
-
-mobile:
-  url:    /mobile
-  param: { module: tab, action: mobile }

@@ -44,6 +44,7 @@ if ($isSubversion)
 // Removing files before installing so we can just overwrite
 $filesystem->remove(sfConfig::get('sf_upload_dir').'/assets');
 $filesystem->remove(sfConfig::get('sf_config_dir').'/ProjectConfiguration.class.php');
+$filesystem->remove(sfConfig::get('sf_config_dir').'/doctrine/schema.yml');
 $filesystem->remove(sfConfig::get('sf_web_dir').'/frontend_dev.php');
 $filesystem->remove(sfConfig::get('sf_web_dir').'/css/main.css');
 $filesystem->remove(sfConfig::get('sf_apps_dir').'/frontend/templates/layout.php');
@@ -61,7 +62,17 @@ $this->installDir(dirname(__FILE__).'/files');
 rename(sfConfig::get('sf_config_dir') . '/databases.yml', sfConfig::get('sf_config_dir') . '/databases.yml-dist');
 
 // Project name
-$filesystem->replaceTokens(sfConfig::get('sf_apps_dir').'/frontend/config/factories.yml', '##', '##', array('PROJECTNAME' => str_replace(' ', '_', strtolower($properties['symfony']['name']))));
+foreach (array(
+  sfConfig::get('sf_apps_dir').'/frontend/config/factories.yml',
+  sfConfig::get('sf_apps_dir').'/frontend/config/view.yml',
+  sfConfig::get('sf_apps_dir').'/frontend/config/app.yml',
+  sfConfig::get('sf_apps_dir').'/frontend/config/unavailable.php',
+  sfConfig::get('sf_apps_dir').'/frontend/config/error/error.html'
+) as $file)
+{
+  $filesystem->replaceTokens($file, '##', '##', array('PROJECTNAME' => str_replace(' ', '_', strtolower($properties['symfony']['name']))));
+  $filesystem->replaceTokens($file, '##', '##', array('PROJECTFNAME' => str_replace('_', ' ', ucwords($properties['symfony']['name']))));
+}
 
 if ($isSubversion)
 {

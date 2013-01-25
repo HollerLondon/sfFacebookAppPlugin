@@ -9,7 +9,7 @@ default:
     apple-mobile-web-app-capable:   "yes"
     viewport:                       "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     
-    #title:        symfony project
+    title:        ##PROJECTFNAME##
     #description:  symfony project
     #keywords:     symfony, project
     #language:     en
@@ -18,7 +18,7 @@ default:
   stylesheets:    [main.css]
 
   javascripts:
-    - https://c165296.ssl.cf3.rackcdn.com/mootools-core-1.4.5-compressed.js: { position: first }
+    - //ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js: { position: first }
     - main.js
 
   has_layout:     true

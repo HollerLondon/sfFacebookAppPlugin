@@ -2,16 +2,16 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="title" content="<!-- PROJECT NAME -->" />
+    <meta name="title" content="##PROJECTFNAME##" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title><!-- PROJECT NAME --></title>
+    <title>##PROJECTFNAME##</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
     <!--[if lte IE 8]>
       <link rel="stylesheet" type="text/css" href="/css/ie.css" />
     <![endif]-->
-    <script type="text/javascript" src="https://c165296.ssl.cf3.rackcdn.com/mootools-core-1.4.5-compressed.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
   </head>
   <body>
@@ -25,7 +25,7 @@
           xfbml  : true
         });
         FB.Canvas.setAutoGrow();
-        FB.Canvas.setSize();
+        //FB.Canvas.setSize();
         //FB.Canvas.scrollTo(0,0);
         
         // To fix issues with whitespace

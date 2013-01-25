@@ -9,9 +9,17 @@ all:
     app_secret:           
     app_url:                                                     # Tab url for redirects
     canvas_url:           http://apps.facebook.com/NAMESPACE/    # Canvas app url for share / linking so mobile works
+    #redirect_url:         http://apps.facebook.com/NAMESPACE/    # If you use @auth on mobile should use canvas_url - defaults to tab url (app_url)
+    #namespace:                                                   # If using Facebook actions
    
-    app_scope:            
-    user_data:            [ first_name, last_name ]   # defaults - fb_uid also included
+    app_scope:            "email"
+    user_data:            [ username, first_name, last_name, email ]   # defaults - fb_uid also included
+    
+    default_og_data:
+      site_name:          "##PROJECTFNAME##"
+      locale:             en_GB
+      title:              "##PROJECTFNAME##"
+      description:        ""
     
     like_gate:
       enabled:            true
@@ -19,7 +27,7 @@ all:
       action:             like
 
   sf_google_analytics_plugin:
-     enabled:                false
+     enabled:             false
 
 
 prod:
@@ -29,12 +37,14 @@ prod:
     app_secret:           
     app_url:                                                     # Tab url for redirects
     canvas_url:           http://apps.facebook.com/NAMESPACE/    # Canvas app url for share / linking so mobile works
+    #redirect_url:         http://apps.facebook.com/NAMESPACE/    # If you use @auth on mobile should use canvas_url - defaults to tab url (app_url)
+    #namespace:                                                   # If using Facebook actions
     
   sf_google_analytics_plugin:
-     enabled:                true
-     profile_id:             
-     insertion:              top
-     tracker:                asynchronous
+     enabled:             true
+     profile_id:          
+     insertion:           top
+     tracker:             asynchronous
 
 
 # Your local dev app config (copy above, and replace FB app details)

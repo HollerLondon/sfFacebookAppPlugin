@@ -3,12 +3,14 @@
   <head>
     <?php include_http_metas() ?>
     <?php include_metas() ?>
+    <?php if (has_slot('meta')) include_slot('meta'); // open graph details ?>
     <?php include_title() ?>
     <link rel="shortcut icon" href="/favicon.ico" />
     <?php include_stylesheets() ?>
     <!--[if lte IE 8]>
       <link rel="stylesheet" type="text/css" href="/css/ie.css" />
     <![endif]-->
+    <?php include_partial('tab/jsSettings'); ?>
     <?php include_javascripts() ?>
   </head>
   <body>
@@ -51,7 +53,9 @@
       </div>
       
       <div id="footer">
-        
+        <?php if ($sf_user->isAuthenticated() && $sf_user->isMobile() && !$sf_user->isSuperAdmin()) : ?>
+          <div id="fb-logout">Logout</div>
+        <?php endif; ?>
       </div>
     </div>
   </body>
