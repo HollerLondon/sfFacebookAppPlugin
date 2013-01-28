@@ -71,7 +71,7 @@ foreach (array(
 ) as $file)
 {
   $filesystem->replaceTokens($file, '##', '##', array('PROJECTNAME' => str_replace(' ', '_', strtolower($properties['symfony']['name']))));
-  $filesystem->replaceTokens($file, '##', '##', array('PROJECTFNAME' => str_replace('_', ' ', ucwords($properties['symfony']['name']))));
+  $filesystem->replaceTokens($file, '##', '##', array('PROJECTFNAME' => ucwords(str_replace('_', ' ', $properties['symfony']['name']))));
 }
 
 if ($isSubversion)
