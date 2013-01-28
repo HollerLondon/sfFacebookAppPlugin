@@ -20,8 +20,8 @@ end_slot(); ?>
   <?php slot('fb_js'); ?>
     // Check if authorized app (and logged in with Facebook)
     var sitePolling = setInterval(function(){
-      if (typeof Site != 'undefined') {
-        FB.getLoginStatus(Site.checkLoginStatus);
+      if (typeof MOBILE != 'undefined') {
+        FB.getLoginStatus(MOBILE.checkLoginStatus);
         clearInterval(sitePolling);
       }
     }, 500);
