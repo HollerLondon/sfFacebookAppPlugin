@@ -16,7 +16,7 @@ slot('meta');
   }
 end_slot(); ?>
 
-<?php if ($sf_user->isMobile() && !$this->user) : // If mobile user and not authenticated - check authentication - or see main.js for suggestions ?>
+<?php if ($sf_user->isMobile() && !$user) : // If mobile user and not authenticated - check authentication - or see main.js for suggestions ?>
   <?php slot('fb_js'); ?>
     // Check if authorized app (and logged in with Facebook)
     var sitePolling = setInterval(function(){
