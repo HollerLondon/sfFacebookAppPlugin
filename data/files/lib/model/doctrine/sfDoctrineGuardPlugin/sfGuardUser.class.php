@@ -100,7 +100,7 @@ class sfGuardUser extends PluginsfGuardUser
     $token->fromArray(array(
       'provider'          => 'facebook',
       'sf_guard_user_id'  => $this->id,
-      'providers_user_id' => $this->fb_uid,
+      'providers_user_id' => $this->id,
       'content'           => $output,
       'expires_at'        => date('Y-m-d H:i:s', (time() + $output['expires']))
     ));
