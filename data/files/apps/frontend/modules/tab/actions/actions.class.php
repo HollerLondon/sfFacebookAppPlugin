@@ -61,7 +61,7 @@ class tabActions extends sfActions
         // Check whether have app_data and send through to tab if do (especially if app set as redirect_url)
         if ($request->hasParameter('app_data')) $app_url = sprintf('%s%sapp_data=%s', $app_url, (false === strrpos($app_url, '?') ? '?' : '&'), $request->getParameter('app_data'));
         
-        $this->renderText(sprintf('<script>top.location.href="%s"</script>', $app_url));
+        return $this->renderText(sprintf('<script>top.location.href="%s"</script>', $app_url));
       }
       else if (isset($this->data['app_data']))
       {
