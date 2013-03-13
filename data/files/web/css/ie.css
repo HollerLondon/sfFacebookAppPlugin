@@ -1,1 +1,3 @@
-#wrapper { width: 810px; }
+html, body { overflow: hidden; }
+
+#wrapper { width: 810px; margin: 0 auto; }

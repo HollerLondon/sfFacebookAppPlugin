@@ -3,7 +3,8 @@
 @import "compass/typography/text/replacement";
 @import "compass/utilities/sprites";
 
+// variables, mixins, etc
 @import "partials/base";
 
-// old IEs don't support media queries so put tab styles in here
-@import "partials/tab";
+// old IEs don't support media queries so put desktop styles in here
+@import "partials/desktop";

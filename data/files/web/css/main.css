@@ -17,4 +17,5 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 #wrapper { width: 100%; }
 
-@media screen and (min-width: 768px) { #wrapper { width: 810px; } }
+@media screen and (min-width: 768px) { html, body { overflow: hidden; }
+  #wrapper { width: 810px; margin: 0 auto; } }

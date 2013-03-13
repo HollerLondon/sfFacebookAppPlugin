@@ -11,7 +11,7 @@
     <!--[if lte IE 8]>
       <link rel="stylesheet" type="text/css" href="/css/ie.css" />
     <![endif]-->
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
   </head>
   <body>

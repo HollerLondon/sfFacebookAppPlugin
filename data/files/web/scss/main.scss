@@ -4,14 +4,25 @@
 @import "compass/typography/text/replacement";
 @import "compass/utilities/sprites";
 
+// variables, mixins, etc
 @import "partials/base";
 
-// mobile is default
-@import "partials/mobile";
+// default global styles
+@import "partials/global";
 
-// target desktops
+// Mobile
+@media screen and (max-width: 767px) {
+  @import "partials/mobile";  
+}
+
+// Tablet
+@media screen and (min-width: 768px) and (max-width: 960px) {
+  @import "partials/tablet";  
+}
+
+// Desktop
 @media screen and (min-width: 768px) {
-  @import "partials/tab";
+  @import "partials/desktop"; 
 }
 
 // retina high density mobile devices
